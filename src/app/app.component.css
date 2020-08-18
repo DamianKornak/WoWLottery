@@ -1,0 +1,16 @@
+table {
+  border: 1px;
+  width: 100%;
+  text-align: center;
+  border-style: solid;
+}
+
+th, td {
+  width: calc(100%/7);
+  border: 1px;
+  border-style: dotted;
+}
+
+.thisIsIt {
+  background-color: lightgreen;
+}

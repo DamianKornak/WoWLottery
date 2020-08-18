@@ -1,20 +1,69 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<button type="button" name="button" (click)="selectFaction()">
+  selectFaction
+</button>
+<div>Faction</div>
+<div>{{selectedFaction}}</div>
+
+<button type="button" name="button" (click)="setupDpsConfiguration()">
+  select dps distribution
+</button>
+
+<table>
+  <thead>
+  <tr>
+    <th>tank</th>
+    <th>heal</th>
+    <th>cac</th>
+    <th>range</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>{{this.setup.meleeCount}}</td>
+    <td>{{this.setup.rangeCount}}</td>
+  </tr>
+  </tbody>
+</table>
+
+<button type="button" name="button" (click)="generateResults()">
+  selection
+</button>
+
+<h3>Compo poubelle : {{falseCompoCount}}</h3>
+
+<table class="tableXX" >
+  <thead>
+  <tr>
+    <th>n°</th>
+    <th>tank</th>
+    <th>heal</th>
+    <th>dps1</th>
+    <th>dps2</th>
+    <th>dps3</th>
+    <th>points</th>
+  </tr>
+  </thead>
+  <tbody  *ngFor="let result of results; let indexResult = index" [class.thisIsIt]="isBestChoice(indexResult)">
+  <tr>
+    <td>{{indexResult}}</td>
+    <td [style.background-color]="result.tank.spec.color"><b>{{result.tank.player.name }}</b> / {{result.tank.spec.class }} - {{ result.tank.spec.name}}</td>
+    <td [style.background-color]="result.heal.spec.color"><b>{{result.heal.player.name }}</b> / {{result.heal.spec.class }} - {{ result.heal.spec.name}}</td>
+    <td [style.background-color]="result.dps1.spec.color"><b>{{result.dps1.player.name }}</b> / {{result.dps1.spec.class }} - {{ result.dps1.spec.name}}</td>
+    <td [style.background-color]="result.dps2.spec.color"><b>{{result.dps2.player.name }}</b> / {{result.dps2.spec.class }} - {{ result.dps2.spec.name}}</td>
+    <td [style.background-color]="result.dps3.spec.color"><b>{{result.dps3.player.name }}</b> / {{result.dps3.spec.class }} - {{ result.dps3.spec.name}}</td>
+    <td>{{resultPoints[indexResult]}} <br>
+      <button (click)="addPoints(indexResult,5)">+5</button>
+      <button (click)="addPoints(indexResult,4)">+4</button>
+      <button (click)="addPoints(indexResult,3)">+3</button>
+      <button (click)="addPoints(indexResult,2)">+2</button>
+      <button (click)="addPoints(indexResult,1)">+1</button>
+    </td>
+  </tbody>
+</table>
+
+<button (click)="resetPoints()">reset points</button>
+
+
 
