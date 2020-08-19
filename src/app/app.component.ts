@@ -54,7 +54,15 @@ export class AppComponent {
 
   falseCompoCount: number = 0;
 
-  forbidenPlayerClassCombos: string[] = ['Damian/Chasseur de démons', 'Nicolas/Guerrier/Armes', 'Nicolas/Guerrier/Fureur', 'Julien/Voleur'];
+  forbidenPlayerClassCombos: string[] = [
+    'Damian/Chasseur de démons/Vengeance',
+    'Damian/Chasseur de démons/Dévastation',
+    'Nicolas/Guerrier/Armes',
+    'Nicolas/Guerrier/Fureur',
+    'Julien/Voleur/Assasinat',
+    'Julien/Voleur/Hors la loi',
+    'Julien/Voleur/Finesse'
+  ];
   forbidenPlayerRoleCombos: string[] = [''];
 
   report = {
