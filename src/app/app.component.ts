@@ -73,6 +73,38 @@ export class AppComponent {
     Pierre: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
   };
 
+  defaultTeam() {
+    this.virginPlayers = [
+      {name: 'Damian', selected: false},
+      {name: 'Hugo', selected: false},
+      {name: 'Pierre', selected: false},
+      {name: 'Julien', selected: false},
+      {name: 'Nicolas', selected: false},
+    ]
+  }
+
+  removePlayer(){
+    if(this.virginPlayers.length == 0){
+      return;
+    }
+    this.virginPlayers.pop()
+  }
+
+  addPlayer(){
+    if(this.virginPlayers.length == 5){
+      return;
+    }
+    this.virginPlayers.push({name : '',selected:false})
+  }
+
+  changeName(event,PlayerIndex){
+    this.virginPlayers.map((played,index) => {
+      if(index == PlayerIndex){
+        played.name = event.target.value
+      }
+    })
+  }
+
   setupDpsConfiguration() {
     const isPair = Math.floor(Math.random() * 100) % 2;
     const isForMelee = !!(Math.floor(Math.random() * 100) % 2);
@@ -87,6 +119,7 @@ export class AppComponent {
   }
 
   selectFaction() {
+    console.log(this.virginPlayers);
     this.selectedFaction = this.factions[Math.floor(Math.random() * this.factions.length)];
   }
 
@@ -179,8 +212,7 @@ export class AppComponent {
       }
     }
 
-    this.report = this.makeReportFromResult(this.results);
-    console.log('report',this.report);
+    console.log('report',this.makeReportFromResult(this.results));
   }
 
   isValidResult(result: IResult) {
@@ -237,13 +269,19 @@ export class AppComponent {
   }
 
   makeReportFromResult(globalResult: any) {
-    let newReport = {
-      Damian: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-      Hugo: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-      Nicolas: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-      Julien: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-      Pierre: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-    };
+    // let newReport = {
+    //   Damian: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+    //   Hugo: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+    //   Nicolas: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+    //   Julien: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+    //   Pierre: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+    // };
+    let newReport = [];
+
+    for(let player of this.virginPlayers){
+      newReport[player.name] =  {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0}
+    }
+
     let allSpecs = [];
     let allTanks = [];
     let allHeals = [];

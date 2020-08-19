@@ -1,3 +1,17 @@
+<button type="button" name="button" (click)="addPlayer()">
+  addPlayer
+</button>
+<button type="button" name="button" (click)="removePlayer()">
+  removePlayer
+</button>
+<button type="button" name="button" (click)="defaultTeam()">
+  GO LA TEAM
+</button>
+
+<div class="form-check form-inline card" *ngFor="let virgin of virginPlayers; let rowIndex=index">
+  <input type="text" value="{{virgin.name}}" (keyup)="changeName($event,rowIndex);">
+</div>
+
 <button type="button" name="button" (click)="selectFaction()">
   selectFaction
 </button>
