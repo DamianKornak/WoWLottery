@@ -54,8 +54,8 @@ export class AppComponent {
 
   falseCompoCount: number = 0;
 
-  forbidenPlayerClassCombos: string[] = ['Damian/Chasseur de démons', 'Nicolas/Guerrier', 'Julien/Voleur', 'Julien/Moine'];
-  forbidenPlayerRoleCombos: string[] = ['Julien/tank'];
+  forbidenPlayerClassCombos: string[] = ['Damian/Chasseur de démons', 'Nicolas/Guerrier', 'Julien/Voleur'];
+  forbidenPlayerRoleCombos: string[] = [''];
 
   report = {
     Damian: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
