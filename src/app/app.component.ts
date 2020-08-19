@@ -54,7 +54,7 @@ export class AppComponent {
 
   falseCompoCount: number = 0;
 
-  forbidenPlayerClassCombos: string[] = ['Damian/Chasseur de démons', 'Nicolas/Guerrier', 'Julien/Voleur'];
+  forbidenPlayerClassCombos: string[] = ['Damian/Chasseur de démons', 'Nicolas/Guerrier/Armes', 'Nicolas/Guerrier/Fureur', 'Julien/Voleur'];
   forbidenPlayerRoleCombos: string[] = [''];
 
   report = {
@@ -186,7 +186,7 @@ export class AppComponent {
       let player: IPlayer = result[role].player;
       let spec: ISpec = result[role].spec;
       selectedSpecs.push(spec);
-      playerClassList.push(player.name + '/' + spec.class);
+      playerClassList.push(player.name + '/' + spec.class + '/' + spec.name);
       playerRoleList.push(player.name + '/' + role);
     });
 
