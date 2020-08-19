@@ -124,7 +124,7 @@ export class AppComponent {
     let index = 0;
     this.falseCompoCount = 0;
     this.results = [];
-    let x = 10;
+    let x = 500;
 
     while (x > 0) {
       this.players = this.virginPlayers;
@@ -172,6 +172,7 @@ export class AppComponent {
     }
 
     this.report = this.makeReportFromResult(this.results);
+    console.log('report',this.report);
   }
 
   isValidResult(result: IResult) {
