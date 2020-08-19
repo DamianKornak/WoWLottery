@@ -1,3 +1,11 @@
+
+<div>
+  <input type="text" #player_0 name="player_0" value="{{virginPlayers[0].name}}" (change)="changeName(0, player_0.value);">
+  <input type="text" #player_1 name="player_1" value="{{virginPlayers[1].name}}" (change)="changeName(1, player_1.value);">
+  <input type="text" #player_2 name="player_2" value="{{virginPlayers[2].name}}" (change)="changeName(2, player_2.value);">
+  <input type="text" #player_3 name="player_3" value="{{virginPlayers[3].name}}" (change)="changeName(3, player_3.value);">
+  <input type="text" #player_4 name="player_4" value="{{virginPlayers[4].name}}" (change)="changeName(4, player_4.value);">
+</div>
 <button type="button" name="button" (click)="selectFaction()">
   selectFaction
 </button>

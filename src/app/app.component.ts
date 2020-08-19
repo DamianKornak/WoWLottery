@@ -25,6 +25,7 @@ export interface IDPSConfig {
 }
 
 export interface IPlayer {
+  id: string;
   name: string;
   selected: boolean;
 }
@@ -38,11 +39,11 @@ export class AppComponent {
   selectedFaction: string;
 
   virginPlayers: IPlayer[] = [
-    {name: 'Damian', selected: false},
-    {name: 'Hugo', selected: false},
-    {name: 'Pierre', selected: false},
-    {name: 'Julien', selected: false},
-    {name: 'Nicolas', selected: false},
+    {id: 0, name: 'Damian', selected: false},
+    {id: 1, name: 'Hugo', selected: false},
+    {id: 2, name: 'Pierre', selected: false},
+    {id: 3, name: 'Julien', selected: false},
+    {id: 4, name: 'Nicolas', selected: false},
   ];
 
   setup: IDPSConfig = {};
@@ -66,11 +67,11 @@ export class AppComponent {
   forbidenPlayerRoleCombos: string[] = [''];
 
   report = {
-    Damian: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-    Hugo: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-    Nicolas: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-    Julien: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-    Pierre: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+    0: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+    1: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+    2: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+    3: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+    4: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
   };
 
   setupDpsConfiguration() {
@@ -88,6 +89,10 @@ export class AppComponent {
 
   selectFaction() {
     this.selectedFaction = this.factions[Math.floor(Math.random() * this.factions.length)];
+  }
+
+  changeName(i, value) {
+    this.virginPlayers[i].name = value;
   }
 
   getRandomValueFromObject(obj: ISpec[], excludeClass: string[] = []) {
@@ -238,11 +243,11 @@ export class AppComponent {
 
   makeReportFromResult(globalResult: any) {
     let newReport = {
-      Damian: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-      Hugo: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-      Nicolas: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-      Julien: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
-      Pierre: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+      0: {name: this.virginPlayers[0].name, tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+      1: {name: this.virginPlayers[1].name, tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+      2: {name: this.virginPlayers[2].name, tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+      3: {name: this.virginPlayers[3].name, tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
+      4: {name: this.virginPlayers[4].name, tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
     };
     let allSpecs = [];
     let allTanks = [];
@@ -257,23 +262,23 @@ export class AppComponent {
       allSpecs.push({type: result.dps2.spec.type, name: result.dps2.spec.name});
       allSpecs.push({type: result.dps3.spec.type, name: result.dps3.spec.name});
 
-      allTanks.push(result.tank.player.name);
-      allHeals.push(result.heal.player.name);
+      allTanks.push(result.tank.player.id);
+      allHeals.push(result.heal.player.id);
 
       if (result.dps1.spec.type == 'DpsCac') {
-        allDpsCac.push(result.dps1.player.name);
+        allDpsCac.push(result.dps1.player.id);
       } else {
-        allDpsDistance.push(result.dps1.player.name);
+        allDpsDistance.push(result.dps1.player.id);
       }
       if (result.dps2.spec.type == 'DpsCac') {
-        allDpsCac.push(result.dps2.player.name);
+        allDpsCac.push(result.dps2.player.id);
       } else {
-        allDpsDistance.push(result.dps2.player.name);
+        allDpsDistance.push(result.dps2.player.id);
       }
       if (result.dps3.spec.type == 'DpsCac') {
-        allDpsCac.push(result.dps3.player.name);
+        allDpsCac.push(result.dps3.player.id);
       } else {
-        allDpsDistance.push(result.dps3.player.name);
+        allDpsDistance.push(result.dps3.player.id);
       }
     });
 
