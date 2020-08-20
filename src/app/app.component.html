@@ -82,15 +82,15 @@
   <tr>
     <td>{{indexResult}}</td>
     <td [style.background-color]="result.tank.spec.color"><b>{{result.tank.player.name }}</b>
-      / {{result.tank.spec.class }} - {{ result.tank.spec.name}}</td>
+      / {{result.tank.spec.fullClassName }} - {{ result.tank.spec.name}}</td>
     <td [style.background-color]="result.heal.spec.color"><b>{{result.heal.player.name }}</b>
-      / {{result.heal.spec.class }} - {{ result.heal.spec.name}}</td>
+      / {{result.heal.spec.fullClassName }} - {{ result.heal.spec.name}}</td>
     <td [style.background-color]="result.dps1.spec.color"><b>{{result.dps1.player.name }}</b>
-      / {{result.dps1.spec.class }} - {{ result.dps1.spec.name}}</td>
+      / {{result.dps1.spec.fullClassName }} - {{ result.dps1.spec.name}}</td>
     <td [style.background-color]="result.dps2.spec.color"><b>{{result.dps2.player.name }}</b>
-      / {{result.dps2.spec.class }} - {{ result.dps2.spec.name}}</td>
+      / {{result.dps2.spec.fullClassName }} - {{ result.dps2.spec.name}}</td>
     <td [style.background-color]="result.dps3.spec.color"><b>{{result.dps3.player.name }}</b>
-      / {{result.dps3.spec.class }} - {{ result.dps3.spec.name}}</td>
+      / {{result.dps3.spec.fullClassName }} - {{ result.dps3.spec.name}}</td>
     <td>{{resultPoints[indexResult]}} <br>
       <button (click)="addPoints(indexResult,5)">+5</button>
       <button (click)="addPoints(indexResult,4)">+4</button>

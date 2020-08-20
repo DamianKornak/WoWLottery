@@ -28,7 +28,8 @@ export class AppComponent {
   factions = ['Alliance', 'Horde'];
 
   results: IResult[] = [];
-  resultPoints: {[index: number] : number} = {};
+  resultPoints: { [index: number]: number } = {};
+  players = null;
 
   falseCompoCount: number = 0;
   teamsCount: number = 10;
@@ -36,9 +37,9 @@ export class AppComponent {
   maxDpsClassPrct: number = 40;
   maxCountPerClasses: number = 5;
   maxDpsCountPerClasses: number = 5;
-  tankSelectedForMaxCountRule : { [className : string] : number } = {};
-  healSelectedForMaxCountRule : { [className : string] : number } = {};
-  dpsSelectedForMaxCountRule : { [className : string] : number } = {};
+  tankSelectedForMaxCountRule: { [className: string]: number } = {};
+  healSelectedForMaxCountRule: { [className: string]: number } = {};
+  dpsSelectedForMaxCountRule: { [className: string]: number } = {};
 
   forbidenPlayerClassCombos: string[] = [
     'Damian/Chasseurdedemons/Vengeance',
@@ -64,28 +65,28 @@ export class AppComponent {
   ) {
   }
 
-  setTeamsCount(event){
+  setTeamsCount(event) {
     this.teamsCount = event.target.value;
   }
 
-  setMaxClassPrct(event){
-    if(event.target.value >= 30){
+  setMaxClassPrct(event) {
+    if (event.target.value >= 30) {
       this.maxClassPrct = event.target.value;
     } else {
       this.maxClassPrct = 30;
     }
 
-    (<HTMLInputElement>document.getElementById("maxClassPrctValue")).value = ''+this.maxClassPrct;
+    (<HTMLInputElement>document.getElementById('maxClassPrctValue')).value = '' + this.maxClassPrct;
   }
 
-  setMaxDpsClassPrct(event){
-    if(event.target.value >= 40){
+  setMaxDpsClassPrct(event) {
+    if (event.target.value >= 40) {
       this.maxDpsClassPrct = event.target.value;
     } else {
       this.maxDpsClassPrct = 40;
     }
 
-    (<HTMLInputElement>document.getElementById("maxDpsClassPrctValue")).value = ''+this.maxDpsClassPrct;
+    (<HTMLInputElement>document.getElementById('maxDpsClassPrctValue')).value = '' + this.maxDpsClassPrct;
   }
 
   defaultTeam() {
@@ -95,29 +96,29 @@ export class AppComponent {
       {name: 'Pierre', selected: false},
       {name: 'Julien', selected: false},
       {name: 'Nicolas', selected: false},
-    ]
+    ];
   }
 
-  removePlayer(){
-    if(this.virginPlayers.length == 0){
+  removePlayer() {
+    if (this.virginPlayers.length == 0) {
       return;
     }
-    this.virginPlayers.pop()
+    this.virginPlayers.pop();
   }
 
-  addPlayer(){
-    if(this.virginPlayers.length == 5){
+  addPlayer() {
+    if (this.virginPlayers.length == 5) {
       return;
     }
-    this.virginPlayers.push({name : '',selected:false})
+    this.virginPlayers.push({name: '', selected: false});
   }
 
-  changeName(event,PlayerIndex){
-    this.virginPlayers.map((played,index) => {
-      if(index == PlayerIndex){
-        played.name = event.target.value
+  changeName(event, PlayerIndex) {
+    this.virginPlayers.map((played, index) => {
+      if (index == PlayerIndex) {
+        played.name = event.target.value;
       }
-    })
+    });
   }
 
   setupDpsConfiguration() {
@@ -138,39 +139,21 @@ export class AppComponent {
     this.selectedFaction = this.factions[Math.floor(Math.random() * this.factions.length)];
   }
 
-  getRandomValueFromObject(obj: ISpec[], excludeClass: string[] = []) {
-    let finalArray = [];
-    let x = 50;
-    while (x > 0) {
-      let shuffleTankArray = this.shuffle(Array.from(obj));
-      finalArray.push(shuffleTankArray[Math.floor(Math.random() * shuffleTankArray.length)]);
-      x = x - 1;
-    }
 
-    if (excludeClass.length > 0) {
-      finalArray = finalArray.filter(el => {
-          return !excludeClass.includes(el.class);
-        }
-      );
-    }
-
-    return finalArray[Math.floor(Math.random() * finalArray.length)];
-  }
-
-  addPoints(index: number, points: number){
+  addPoints(index: number, points: number) {
     this.resultPoints[index] += points;
   }
 
-  isBestChoice(index: number){
+  isBestChoice(index: number) {
     let currentIndexCount = this.resultPoints[index];
     return currentIndexCount && Object.values(this.resultPoints).filter(value => {
-      return currentIndexCount < value
-    }).length == 0
+      return currentIndexCount < value;
+    }).length == 0;
   }
 
-  resetPoints(){
-    let x = 9
-    while (x >= 0){
+  resetPoints() {
+    let x = 9;
+    while (x >= 0) {
       this.resultPoints[x] = 0;
       x--;
     }
@@ -187,24 +170,19 @@ export class AppComponent {
 
     tanksListData.map(spec => {
       this.tankSelectedForMaxCountRule[spec.class] = 0;
-    })
+    });
 
     healsListData.map(spec => {
       this.healSelectedForMaxCountRule[spec.class] = 0;
-    })
+    });
 
     meleesListData.map(spec => {
       this.dpsSelectedForMaxCountRule[spec.class] = 0;
-    })
+    });
 
     rangesListData.map(spec => {
       this.dpsSelectedForMaxCountRule[spec.class] = 0;
-    })
-
-    console.log('dpsSelectedForMaxCountRule',this.dpsSelectedForMaxCountRule);
-    console.log('tankSelectedForMaxCountRule',this.tankSelectedForMaxCountRule);
-    console.log('healSelectedForMaxCountRule',this.healSelectedForMaxCountRule);
-    console.log('maxCountPerClasses',this.maxCountPerClasses);
+    });
 
     while (x > 0) {
       this.players = this.virginPlayers;
@@ -215,20 +193,20 @@ export class AppComponent {
 
       let excludeClass: string[] = [];
 
-      const tank: ISpec = this.getRandomValueFromObject(tanksListData, excludeClass);
+      const tank: ISpec = this.getRandomSpec(tanksListData, excludeClass);
       excludeClass.push(tank.class);
 
-      const heal: ISpec = this.getRandomValueFromObject(healsListData, excludeClass);
+      const heal: ISpec = this.getRandomSpec(healsListData, excludeClass);
       excludeClass.push(heal.class);
 
       const isDoubleRanged = this.setup.rangeCount > 1;
-      const dps1: ISpec = this.getRandomValueFromObject(isDoubleRanged ? rangesListData : meleesListData, excludeClass);
+      const dps1: ISpec = this.getRandomSpec(isDoubleRanged ? rangesListData : meleesListData, excludeClass);
       excludeClass.push(dps1.class);
 
-      const dps2: ISpec = this.getRandomValueFromObject(isDoubleRanged ? meleesListData : rangesListData, excludeClass);
+      const dps2: ISpec = this.getRandomSpec(isDoubleRanged ? meleesListData : rangesListData, excludeClass);
       excludeClass.push(dps2.class);
 
-      const dps3: ISpec = this.getRandomValueFromObject(isDoubleRanged ? rangesListData : meleesListData, excludeClass);
+      const dps3: ISpec = this.getRandomSpec(isDoubleRanged ? rangesListData : meleesListData, excludeClass);
       excludeClass.push(dps3.class);
 
 
@@ -255,7 +233,7 @@ export class AppComponent {
       }
     }
 
-    console.log('report',this.makeReportFromResult(this.results));
+    console.log('report', this.makeReportFromResult(this.results));
   }
 
   isValidResult(result: IResult) {
@@ -271,39 +249,39 @@ export class AppComponent {
     Object.keys(result).map(function (role) {
       let player: IPlayer = result[role].player;
       let spec: ISpec = result[role].spec;
-      if(spec.type == 'Tank'){
+      if (spec.type == 'Tank') {
         tankClass = spec.class;
-      } else if(spec.type == 'Heal'){
+      } else if (spec.type == 'Heal') {
         healClass = spec.class;
       } else {
-        dpsClass.push(spec.class)
+        dpsClass.push(spec.class);
       }
       selectedSpecs.push(spec);
       playerClassList.push(player.name + '/' + spec.class + '/' + spec.name);
       playerRoleList.push(player.name + '/' + role);
     });
 
-    if(this.tankSelectedForMaxCountRule[tankClass] == this.maxCountPerClasses){
+    if (this.tankSelectedForMaxCountRule[tankClass] == this.maxCountPerClasses) {
       return false;
     }
 
-    if(this.healSelectedForMaxCountRule[healClass] == this.maxCountPerClasses){
+    if (this.healSelectedForMaxCountRule[healClass] == this.maxCountPerClasses) {
       return false;
     }
 
     let dpsOk = true;
     dpsClass.map(dpsClass => {
-      if(this.dpsSelectedForMaxCountRule[dpsClass] == this.maxDpsCountPerClasses){
-        dpsOk = false
+      if (this.dpsSelectedForMaxCountRule[dpsClass] == this.maxDpsCountPerClasses) {
+        dpsOk = false;
       }
-    })
+    });
 
-    if(!dpsOk){
+    if (!dpsOk) {
       return false;
     }
 
     selectedSpecs.map(selectedSpec => {
-      if(selectedSpec.canBL){
+      if (selectedSpec.canBL) {
         blCount += 1;
       }
 
@@ -312,28 +290,28 @@ export class AppComponent {
       }
     });
 
-    let validClases : boolean = bRezCount == blCount && bRezCount + blCount == 2;
+    let validClases: boolean = bRezCount == blCount && bRezCount + blCount == 2;
 
-    if(!validClases){
+    if (!validClases) {
       return false;
     }
 
-    let playerClassFlag : boolean = false
+    let playerClassFlag: boolean = false;
     playerClassList.map(playerClass => {
-      if(this.forbidenPlayerClassCombos.includes(playerClass)){
+      if (this.forbidenPlayerClassCombos.includes(playerClass)) {
         playerClassFlag = true;
       }
-    })
+    });
 
-    let playerRoleFlag : boolean = false
+    let playerRoleFlag: boolean = false;
     playerRoleList.map(playerClass => {
-      if(this.forbidenPlayerRoleCombos.includes(playerClass)){
+      if (this.forbidenPlayerRoleCombos.includes(playerClass)) {
         playerRoleFlag = true;
       }
-    })
+    });
 
-    if(playerClassFlag || playerRoleFlag){
-      this.falseCompoCount +=1;
+    if (playerClassFlag || playerRoleFlag) {
+      this.falseCompoCount += 1;
       return false;
     }
 
@@ -342,60 +320,51 @@ export class AppComponent {
 
   makeReportFromResult(globalResult: any) {
     let newReport = [];
-
-    for(let player of this.virginPlayers){
-      newReport[player.name] =  {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0}
-    }
-
     let allSpecs = [];
     let allTanks = [];
     let allHeals = [];
     let allDpsCac = [];
     let allDpsDistance = [];
 
+    for (let player of this.virginPlayers) {
+      newReport[player.name] = {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0};
+    }
+
     globalResult.map(result => {
-      allSpecs.push({type: result.tank.spec.type, name: result.tank.spec.name});
-      allSpecs.push({type: result.heal.spec.type, name: result.heal.spec.name});
-      allSpecs.push({type: result.dps1.spec.type, name: result.dps1.spec.name});
-      allSpecs.push({type: result.dps2.spec.type, name: result.dps2.spec.name});
-      allSpecs.push({type: result.dps3.spec.type, name: result.dps3.spec.name});
+      Object.keys(result).map(key => {
+        let specData: { spec: ISpec, player?: IPlayer } = result[key];
+        allSpecs.push({type: specData.spec.type, name: specData.spec.name});
 
-      allTanks.push(result.tank.player.name);
-      allHeals.push(result.heal.player.name);
-
-      if (result.dps1.spec.type == 'DpsCac') {
-        allDpsCac.push(result.dps1.player.name);
-      } else {
-        allDpsDistance.push(result.dps1.player.name);
-      }
-      if (result.dps2.spec.type == 'DpsCac') {
-        allDpsCac.push(result.dps2.player.name);
-      } else {
-        allDpsDistance.push(result.dps2.player.name);
-      }
-      if (result.dps3.spec.type == 'DpsCac') {
-        allDpsCac.push(result.dps3.player.name);
-      } else {
-        allDpsDistance.push(result.dps3.player.name);
-      }
+        switch (specData.spec.type) {
+          case 'DpsCac':
+            allDpsCac.push(specData.player.name);
+            break;
+          case 'DpsDistance':
+            allDpsDistance.push(specData.player.name);
+            break;
+          case 'Heal':
+            allHeals.push(result.heal.player.name);
+            break;
+          case 'Tank':
+            allTanks.push(result.tank.player.name);
+            break;
+          default:
+            break;
+        }
+      });
     });
 
-    allTanks.map(el => {
-      newReport[el].tank += 1;
-    });
+    allTanks.map(el => newReport[el].tank += 1);
+    allHeals.map(el => newReport[el].heal += 1);
+    allDpsCac.map(el => newReport[el].dpsCac += 1);
+    allDpsDistance.map(el => newReport[el].dpsDistance += 1);
 
-    allHeals.map(el => {
-      newReport[el].heal += 1;
-    });
+    // this.getAllSpecStats(allSpecs);
 
-    allDpsCac.map(el => {
-      newReport[el].dpsCac += 1;
-    });
+    return newReport;
+  }
 
-    allDpsDistance.map(el => {
-      newReport[el].dpsDistance += 1;
-    });
-
+  getAllSpecStats(allSpecs: ISpec[]) {
     let test = [];
     allSpecs.map(el => {
       if (!!test[el.type] && !!test[el.type][el.name]) {
@@ -408,28 +377,19 @@ export class AppComponent {
       }
     });
 
-    return newReport;
+    console.log('test', test);
+  }
+
+  getRandomSpec(specs: ISpec[], excludeClass: string[] = []) {
+    let specsToChoose = specs.filter(spec => !excludeClass.includes(spec.class));
+    return specsToChoose[Math.floor(Math.random() * specsToChoose.length)];
   }
 
   selectPlayer() {
-    let shufflePlayersArray = this.shuffle(Array.from(this.players.filter(el => !el.selected)));
-    const playerchosen = shufflePlayersArray[Math.floor(Math.random() * shufflePlayersArray.length)];
+    let leftPlayers = this.players.filter(el => !el.selected);
+    const playerchosen = leftPlayers[Math.floor(Math.random() * leftPlayers.length)];
     this.players.filter(el => el.name == playerchosen.name).map(el => el.selected = true);
     return playerchosen;
   }
 
-  shuffle(arra1) {
-    var ctr = arra1.length, temp, index;
-
-    while (ctr > 0) {
-      index = Math.floor(Math.random() * ctr);
-      ctr--;
-      temp = arra1[ctr];
-      arra1[ctr] = arra1[index];
-      arra1[index] = temp;
-    }
-    return arra1;
-  }
-
-  players = null;
 }

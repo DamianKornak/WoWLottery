@@ -9,6 +9,7 @@ export interface IResult {
 
 export interface ISpec {
   class: string;
+  fullClassName: string;
   name: string;
   type: 'DpsCac' | 'Tank' | 'Heal' | 'DpsDistance';
   canBL: boolean;
