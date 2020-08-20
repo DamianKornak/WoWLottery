@@ -17,9 +17,11 @@
 
   <div class="div_top">
     <h4>teams count</h4>
-    <input type="text" value="{{teamsCount}}" (keyup)="setTeamsCount($event);">
+    <input type="text" value="{{teamsCount}}" (change)="setTeamsCount($event);">
     <h4>max class % (30% min)</h4>
-    <input type="text" id="maxClassPrctValue" value="{{maxClassPrct}}" (keyup)="setMaxClassPrct($event);">
+    <input type="text" id="maxClassPrctValue" value="{{maxClassPrct}}" (change)="setMaxClassPrct($event);">
+    <h4>max dps class % (40% min)</h4>
+    <input type="text" id="maxDpsClassPrctValue" value="{{maxDpsClassPrct}}" (change)="setMaxDpsClassPrct($event);">
   </div>
 
   <div class="div_top">
