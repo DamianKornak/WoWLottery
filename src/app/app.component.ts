@@ -32,8 +32,8 @@ export class AppComponent {
 
   falseCompoCount: number = 0;
   teamsCount: number = 10;
-  maxClassPrct: number = 50;
-  maxDpsClassPrct: number = 50;
+  maxClassPrct: number = 30;
+  maxDpsClassPrct: number = 40;
   maxCountPerClasses: number = 5;
   maxDpsCountPerClasses: number = 5;
   tankSelectedForMaxCountRule : { [className : string] : number } = {};
