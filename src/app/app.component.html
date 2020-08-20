@@ -1,45 +1,60 @@
-<button type="button" name="button" (click)="addPlayer()">
-  addPlayer
-</button>
-<button type="button" name="button" (click)="removePlayer()">
-  removePlayer
-</button>
-<button type="button" name="button" (click)="defaultTeam()">
-  GO LA TEAM
-</button>
+<section class="section_top">
+  <div class="div_top">
+    <button type="button" name="button" (click)="addPlayer()">
+      addPlayer
+    </button>
+    <button type="button" name="button" (click)="removePlayer()">
+      removePlayer
+    </button>
+    <button type="button" name="button" (click)="defaultTeam()">
+      GO LA TEAM
+    </button>
 
-<div class="form-check form-inline card" *ngFor="let virgin of virginPlayers; let rowIndex=index">
-  <input type="text" value="{{virgin.name}}" (keyup)="changeName($event,rowIndex);">
-</div>
+    <div class="form-check form-inline card" *ngFor="let virgin of virginPlayers; let rowIndex=index">
+      <input type="text" value="{{virgin.name}}" (keyup)="changeName($event,rowIndex);">
+    </div>
+  </div>
 
-<button type="button" name="button" (click)="selectFaction()">
-  selectFaction
-</button>
-<div>Faction</div>
-<div>{{selectedFaction}}</div>
+  <div class="div_top">
+    <h4>teams count</h4>
+    <input type="text" value="{{teamsCount}}" (keyup)="setTeamsCount($event);">
+  </div>
 
-<button type="button" name="button" (click)="setupDpsConfiguration()">
-  select dps distribution
-</button>
+  <div class="div_top">
+    <button type="button" name="button" (click)="selectFaction()">
+      selectFaction
+    </button>
+    <div>Faction</div>
+    <div>{{selectedFaction}}</div>
 
-<table>
-  <thead>
-  <tr>
-    <th>tank</th>
-    <th>heal</th>
-    <th>cac</th>
-    <th>range</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>1</td>
-    <td>1</td>
-    <td>{{this.setup.meleeCount}}</td>
-    <td>{{this.setup.rangeCount}}</td>
-  </tr>
-  </tbody>
-</table>
+  </div>
+  <div class="div_top">
+
+    <button type="button" name="button" (click)="setupDpsConfiguration()">
+      select dps distribution
+    </button>
+
+    <table>
+      <thead>
+      <tr>
+        <th>tank</th>
+        <th>heal</th>
+        <th>cac</th>
+        <th>range</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>{{this.setup.meleeCount}}</td>
+        <td>{{this.setup.rangeCount}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>
 
 <button type="button" name="button" (click)="generateResults()">
   selection
@@ -47,7 +62,7 @@
 
 <h3>Compo poubelle : {{falseCompoCount}}</h3>
 
-<table class="tableXX" >
+<table class="tableXX">
   <thead>
   <tr>
     <th>n°</th>
@@ -59,14 +74,19 @@
     <th>points</th>
   </tr>
   </thead>
-  <tbody  *ngFor="let result of results; let indexResult = index" [class.thisIsIt]="isBestChoice(indexResult)">
+  <tbody *ngFor="let result of results; let indexResult = index" [class.thisIsIt]="isBestChoice(indexResult)">
   <tr>
     <td>{{indexResult}}</td>
-    <td [style.background-color]="result.tank.spec.color"><b>{{result.tank.player.name }}</b> / {{result.tank.spec.class }} - {{ result.tank.spec.name}}</td>
-    <td [style.background-color]="result.heal.spec.color"><b>{{result.heal.player.name }}</b> / {{result.heal.spec.class }} - {{ result.heal.spec.name}}</td>
-    <td [style.background-color]="result.dps1.spec.color"><b>{{result.dps1.player.name }}</b> / {{result.dps1.spec.class }} - {{ result.dps1.spec.name}}</td>
-    <td [style.background-color]="result.dps2.spec.color"><b>{{result.dps2.player.name }}</b> / {{result.dps2.spec.class }} - {{ result.dps2.spec.name}}</td>
-    <td [style.background-color]="result.dps3.spec.color"><b>{{result.dps3.player.name }}</b> / {{result.dps3.spec.class }} - {{ result.dps3.spec.name}}</td>
+    <td [style.background-color]="result.tank.spec.color"><b>{{result.tank.player.name }}</b>
+      / {{result.tank.spec.class }} - {{ result.tank.spec.name}}</td>
+    <td [style.background-color]="result.heal.spec.color"><b>{{result.heal.player.name }}</b>
+      / {{result.heal.spec.class }} - {{ result.heal.spec.name}}</td>
+    <td [style.background-color]="result.dps1.spec.color"><b>{{result.dps1.player.name }}</b>
+      / {{result.dps1.spec.class }} - {{ result.dps1.spec.name}}</td>
+    <td [style.background-color]="result.dps2.spec.color"><b>{{result.dps2.player.name }}</b>
+      / {{result.dps2.spec.class }} - {{ result.dps2.spec.name}}</td>
+    <td [style.background-color]="result.dps3.spec.color"><b>{{result.dps3.player.name }}</b>
+      / {{result.dps3.spec.class }} - {{ result.dps3.spec.name}}</td>
     <td>{{resultPoints[indexResult]}} <br>
       <button (click)="addPoints(indexResult,5)">+5</button>
       <button (click)="addPoints(indexResult,4)">+4</button>

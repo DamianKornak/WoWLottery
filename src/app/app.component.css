@@ -6,11 +6,19 @@ table {
 }
 
 th, td {
-  width: calc(100%/7);
+  width: calc(100% / 7);
   border: 1px;
   border-style: dotted;
 }
 
 .thisIsIt {
   background-color: lightgreen;
+}
+
+.section_top {
+  display: flex
+}
+
+.div_top {
+  flex: auto;
 }

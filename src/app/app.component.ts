@@ -31,6 +31,7 @@ export class AppComponent {
   resultPoints: {[index: number] : number} = {};
 
   falseCompoCount: number = 0;
+  teamsCount: number = 10;
 
   forbidenPlayerClassCombos: string[] = [
     'Damian/Chasseur de démons/Vengeance',
@@ -50,6 +51,10 @@ export class AppComponent {
     Julien: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
     Pierre: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
   };
+
+  setTeamsCount(event){
+    this.teamsCount = event.target.value;
+  }
 
   defaultTeam() {
     this.virginPlayers = [
@@ -143,7 +148,7 @@ export class AppComponent {
     let index = 0;
     this.falseCompoCount = 0;
     this.results = [];
-    let x = 500;
+    let x = this.teamsCount;
 
     while (x > 0) {
       this.players = this.virginPlayers;
