@@ -41,8 +41,15 @@ const specs : ISpec[] = [
 
 export const tanks = specs.filter(spec => spec.type == 'Tank');
 export const heals = specs.filter(spec => spec.type == 'Heal');
+export const dps = specs.filter(spec => (spec.type == 'DpsCac') || (spec.type == 'DpsDistance'));
 export const melees = specs.filter(spec => spec.type == 'DpsCac');
 export const ranges = specs.filter(spec => spec.type == 'DpsDistance');
+
+export const selectedForMaxCountRulePristin = (specs : ISpec[]) : { [className: string]: number } => {
+  let result : { [className: string]: number } = {};
+  specs.map(spec => result[spec.class] = 0)
+  return result;
+}
 
 //
 // export const tanks: ISpec[] = [

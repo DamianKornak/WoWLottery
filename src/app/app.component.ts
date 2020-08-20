@@ -4,7 +4,9 @@ import {
   heals as healsListData,
   tanks as tanksListData,
   ranges as rangesListData,
-  melees as meleesListData
+  melees as meleesListData,
+  selectedForMaxCountRulePristin,
+  dps as dpsListData
 } from './data';
 
 @Component({
@@ -135,10 +137,8 @@ export class AppComponent {
   }
 
   selectFaction() {
-    console.log(this.virginPlayers);
     this.selectedFaction = this.factions[Math.floor(Math.random() * this.factions.length)];
   }
-
 
   addPoints(index: number, points: number) {
     this.resultPoints[index] += points;
@@ -152,14 +152,11 @@ export class AppComponent {
   }
 
   resetPoints() {
-    let x = 9;
-    while (x >= 0) {
-      this.resultPoints[x] = 0;
-      x--;
-    }
+    Object.keys(this.resultPoints).map(key => this.resultPoints[key] = 0)
   }
 
   generateResults() {
+    console.log('START')
     let index = 0;
     this.falseCompoCount = 0;
     this.results = [];
@@ -168,29 +165,14 @@ export class AppComponent {
     this.maxCountPerClasses = this.teamsCount * this.maxClassPrct / 100;
     this.maxDpsCountPerClasses = this.teamsCount * this.maxDpsClassPrct / 100;
 
-    tanksListData.map(spec => {
-      this.tankSelectedForMaxCountRule[spec.class] = 0;
-    });
-
-    healsListData.map(spec => {
-      this.healSelectedForMaxCountRule[spec.class] = 0;
-    });
-
-    meleesListData.map(spec => {
-      this.dpsSelectedForMaxCountRule[spec.class] = 0;
-    });
-
-    rangesListData.map(spec => {
-      this.dpsSelectedForMaxCountRule[spec.class] = 0;
-    });
+    this.tankSelectedForMaxCountRule = selectedForMaxCountRulePristin(tanksListData);
+    this.healSelectedForMaxCountRule = selectedForMaxCountRulePristin(healsListData);
+    this.dpsSelectedForMaxCountRule = selectedForMaxCountRulePristin(dpsListData);
 
     while (x > 0) {
       this.players = this.virginPlayers;
       this.players.map(el => el.selected = false);
-
       this.setupDpsConfiguration();
-
-
       let excludeClass: string[] = [];
 
       const tank: ISpec = this.getRandomSpec(tanksListData, excludeClass);
@@ -208,7 +190,6 @@ export class AppComponent {
 
       const dps3: ISpec = this.getRandomSpec(isDoubleRanged ? rangesListData : meleesListData, excludeClass);
       excludeClass.push(dps3.class);
-
 
       let result: IResult = {
         tank: {spec: tank, player: this.selectPlayer()},
@@ -234,6 +215,7 @@ export class AppComponent {
     }
 
     console.log('report', this.makeReportFromResult(this.results));
+    console.log('STOP')
   }
 
   isValidResult(result: IResult) {
@@ -326,9 +308,7 @@ export class AppComponent {
     let allDpsCac = [];
     let allDpsDistance = [];
 
-    for (let player of this.virginPlayers) {
-      newReport[player.name] = {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0};
-    }
+    this.virginPlayers.map(player => newReport[player.name] = {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0})
 
     globalResult.map(result => {
       Object.keys(result).map(key => {
