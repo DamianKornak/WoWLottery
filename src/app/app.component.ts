@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {IDPSConfig, IPlayer, IResult, ISpec} from './interfaces';
 import {
   heals as healsListData,
@@ -32,14 +32,18 @@ export class AppComponent {
 
   falseCompoCount: number = 0;
   teamsCount: number = 10;
+  maxClassPrct: number = 50;
+  maxCountPerClasses: number = 5;
+  tankSelectedForMaxCountRule : { [className : string] : number } = {};
+  healSelectedForMaxCountRule : { [className : string] : number } = {};
 
   forbidenPlayerClassCombos: string[] = [
-    'Damian/Chasseur de démons/Vengeance',
-    'Damian/Chasseur de démons/Dévastation',
+    'Damian/Chasseurdedemons/Vengeance',
+    'Damian/Chasseurdedemons/Dévastation',
     'Nicolas/Guerrier/Armes',
     'Nicolas/Guerrier/Fureur',
     'Julien/Voleur/Assasinat',
-    'Julien/Voleur/Hors la loi',
+    'Julien/Voleur/Horslaloi',
     'Julien/Voleur/Finesse'
   ];
   forbidenPlayerRoleCombos: string[] = [''];
@@ -52,8 +56,23 @@ export class AppComponent {
     Pierre: {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0},
   };
 
+  constructor(
+    private cd: ChangeDetectorRef,
+  ) {
+  }
+
   setTeamsCount(event){
     this.teamsCount = event.target.value;
+  }
+
+  setMaxClassPrct(event){
+    if(event.target.value >= 30){
+      this.maxClassPrct = event.target.value;
+    } else {
+      this.maxClassPrct = 30;
+    }
+
+    (<HTMLInputElement>document.getElementById("maxClassPrctValue")).value = ''+this.maxClassPrct;
   }
 
   defaultTeam() {
@@ -150,6 +169,17 @@ export class AppComponent {
     this.results = [];
     let x = this.teamsCount;
 
+    this.maxCountPerClasses = this.teamsCount * this.maxClassPrct / 100;
+    tanksListData.map(spec => {
+      this.tankSelectedForMaxCountRule[spec.class] = 0;
+    })
+
+    healsListData.map(spec => {
+      this.healSelectedForMaxCountRule[spec.class] = 0;
+    })
+
+    console.log('1',this.maxCountPerClasses);
+
     while (x > 0) {
       this.players = this.virginPlayers;
       this.players.map(el => el.selected = false);
@@ -184,8 +214,9 @@ export class AppComponent {
         dps3: {spec: dps3, player: this.selectPlayer()},
       };
 
-
       if (this.isValidResult(result)) {
+        this.tankSelectedForMaxCountRule[tank.class] += 1;
+        this.healSelectedForMaxCountRule[heal.class] += 1;
         this.resultPoints[index] = 0;
         index++;
         this.results.push(result);
@@ -204,14 +235,30 @@ export class AppComponent {
     let playerRoleList: string[] = [];
     let blCount: number = 0;
     let bRezCount: number = 0;
+    let tankClass: string = '';
+    let healClass: string = '';
 
     Object.keys(result).map(function (role) {
       let player: IPlayer = result[role].player;
       let spec: ISpec = result[role].spec;
+      if(spec.type == 'Tank'){
+        tankClass = spec.class;
+      }
+      if(spec.type == 'Heal'){
+        healClass = spec.class;
+      }
       selectedSpecs.push(spec);
       playerClassList.push(player.name + '/' + spec.class + '/' + spec.name);
       playerRoleList.push(player.name + '/' + role);
     });
+
+    if(this.tankSelectedForMaxCountRule[tankClass] == this.maxCountPerClasses){
+      return false;
+    }
+
+    if(this.healSelectedForMaxCountRule[healClass] == this.maxCountPerClasses){
+      return false;
+    }
 
     selectedSpecs.map(selectedSpec => {
       if(selectedSpec.canBL){
