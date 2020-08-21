@@ -17,6 +17,18 @@ th, td {
 
 .section_top {
   display: flex
+
+}
+
+@media (max-width: 640px) {
+  .section_top {
+    flex-direction: column;
+  }
+}
+
+.selectionButton {
+  margin-top: 30px;
+  width: 100%;
 }
 
 .div_top {

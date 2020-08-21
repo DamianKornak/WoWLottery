@@ -72,22 +72,12 @@ export class AppComponent {
   }
 
   setMaxClassPrct(event) {
-    if (event.target.value >= 30) {
-      this.maxClassPrct = event.target.value;
-    } else {
-      this.maxClassPrct = 30;
-    }
-
+    this.maxClassPrct = event.target.value >= 30 ? event.target.value : 30;
     (<HTMLInputElement>document.getElementById('maxClassPrctValue')).value = '' + this.maxClassPrct;
   }
 
   setMaxDpsClassPrct(event) {
-    if (event.target.value >= 40) {
-      this.maxDpsClassPrct = event.target.value;
-    } else {
-      this.maxDpsClassPrct = 40;
-    }
-
+    this.maxDpsClassPrct = event.target.value >= 40 ? event.target.value : 40;
     (<HTMLInputElement>document.getElementById('maxDpsClassPrctValue')).value = '' + this.maxDpsClassPrct;
   }
 
@@ -102,17 +92,11 @@ export class AppComponent {
   }
 
   removePlayer() {
-    if (this.virginPlayers.length == 0) {
-      return;
-    }
-    this.virginPlayers.pop();
+    this.virginPlayers.length ? this.virginPlayers.pop() : '';
   }
 
   addPlayer() {
-    if (this.virginPlayers.length == 5) {
-      return;
-    }
-    this.virginPlayers.push({name: '', selected: false});
+    this.virginPlayers.length == 5 ? '' : this.virginPlayers.push({name: '', selected: false});
   }
 
   changeName(event, PlayerIndex) {
@@ -152,11 +136,11 @@ export class AppComponent {
   }
 
   resetPoints() {
-    Object.keys(this.resultPoints).map(key => this.resultPoints[key] = 0)
+    Object.keys(this.resultPoints).map(key => this.resultPoints[key] = 0);
   }
 
   generateResults() {
-    console.log('START')
+    console.log('START');
     let index = 0;
     this.falseCompoCount = 0;
     this.results = [];
@@ -215,7 +199,7 @@ export class AppComponent {
     }
 
     console.log('report', this.makeReportFromResult(this.results));
-    console.log('STOP')
+    console.log('STOP');
   }
 
   isValidResult(result: IResult) {
@@ -308,7 +292,7 @@ export class AppComponent {
     let allDpsCac = [];
     let allDpsDistance = [];
 
-    this.virginPlayers.map(player => newReport[player.name] = {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0})
+    this.virginPlayers.map(player => newReport[player.name] = {tank: 0, dpsCac: 0, dpsDistance: 0, heal: 0});
 
     globalResult.map(result => {
       Object.keys(result).map(key => {
