@@ -44,13 +44,13 @@ export class AppComponent {
   dpsSelectedForMaxCountRule: { [className: string]: number } = {};
 
   forbidenPlayerClassCombos: string[] = [
-    'Damian/Chasseurdedemons/Vengeance',
-    'Damian/Chasseurdedemons/Dévastation',
-    'Nicolas/Guerrier/Armes',
-    'Nicolas/Guerrier/Fureur',
-    'Julien/Voleur/Assasinat',
-    'Julien/Voleur/Horslaloi',
-    'Julien/Voleur/Finesse'
+    'Damian/dh/Vengeance',
+    'Damian/dh/Dévastation',
+    'Nicolas/war/Armes',
+    'Nicolas/war/Fureur',
+    'Julien/voleur/Assasinat',
+    'Julien/voleur/Horslaloi',
+    'Julien/voleur/Finesse'
   ];
   forbidenPlayerRoleCombos: string[] = [''];
 
