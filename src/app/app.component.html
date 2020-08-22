@@ -29,7 +29,9 @@
       selectFaction
     </button>
     <div>Faction</div>
-    <img src="assets/img/2.jpg" alt="both">
+    <img *ngIf="isFaction()" width="100%" height="90%" src="assets/img/2.jpg" alt="both">
+    <img *ngIf="isFaction('Alliance')" width="100%" height="90%" src="assets/img/alliance.jpeg" alt="alliance">
+    <img *ngIf="isFaction('Horde')" width="100%" height="90%" src="assets/img/horde.jpg" alt="horde">
     <div>{{selectedFaction}}</div>
 
   </div>

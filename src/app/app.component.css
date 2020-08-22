@@ -32,5 +32,5 @@ th, td {
 }
 
 .div_top {
-  flex: auto;
+  flex: 1 1 0px;
 }

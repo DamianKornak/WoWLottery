@@ -15,7 +15,7 @@ import {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  selectedFaction: string;
+  selectedFaction: string = null;
 
   virginPlayers: IPlayer[] = [
     {name: 'Damian', selected: false},
@@ -122,6 +122,12 @@ export class AppComponent {
 
   selectFaction() {
     this.selectedFaction = this.factions[Math.floor(Math.random() * this.factions.length)];
+  }
+
+  isFaction(faction = undefined){
+    console.log('faction',faction);
+    console.log('selected',this.selectedFaction);
+    return this.selectedFaction == faction;
   }
 
   addPoints(index: number, points: number) {
