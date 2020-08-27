@@ -8,6 +8,7 @@ import {
   selectedForMaxCountRulePristin,
   dps as dpsListData
 } from './data';
+import * as crypto from 'crypto-js';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +33,7 @@ export class AppComponent {
   results: IResult[] = [];
   resultPoints: { [index: number]: number } = {};
   players = null;
+  hash = '';
 
   falseCompoCount: number = 0;
   teamsCount: number = 10;
@@ -135,6 +137,13 @@ export class AppComponent {
 
   addPoints(index: number, points: number) {
     this.resultPoints[index] += points;
+
+    if(this.hash.includes('||||')){
+      var split = this.hash.split('||||')
+      this.hash = btoa(JSON.stringify(this.resultPoints)) + '||||' + split[1]
+    } else {
+      this.hash = btoa(JSON.stringify(this.resultPoints)) + '||||' + this.hash
+    }
   }
 
   isBestChoice(index: number) {
@@ -215,6 +224,7 @@ export class AppComponent {
       }
     }
 
+    this.hash = btoa(JSON.stringify(this.results));
     console.log('report', this.makeReportFromResult(this.results));
     console.log('STOP');
   }
@@ -371,6 +381,20 @@ export class AppComponent {
     const playerchosen = leftPlayers[Math.floor(Math.random() * leftPlayers.length)];
     this.players.filter(el => el.name == playerchosen.name).map(el => el.selected = true);
     return playerchosen;
+  }
+
+  revertCompo(){
+    let hash = (<HTMLInputElement>document.getElementById('revertCompo')).value;
+    if(hash.includes('||||')){
+      var split = hash.split('||||')
+      console.log('split',split);
+
+      this.results = JSON.parse(atob(split[1]));
+      this.resultPoints = JSON.parse(atob(split[0]));
+
+    } else {
+      this.results = JSON.parse(atob(hash));
+    }
   }
 
 }
