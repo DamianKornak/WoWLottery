@@ -121,12 +121,15 @@ export class AppComponent {
   }
 
   selectFaction() {
-    this.selectedFaction = this.factions[Math.floor(Math.random() * this.factions.length)];
+    if(Math.random() >= 0.5){
+      this.selectedFaction = 'Alliance'
+    } else {
+      this.selectedFaction = 'Horde'
+    }
+    // this.selectedFaction = this.factions[Math.floor(Math.random() * this.factions.length)];
   }
 
   isFaction(faction = undefined){
-    console.log('faction',faction);
-    console.log('selected',this.selectedFaction);
     return this.selectedFaction == faction;
   }
 
@@ -172,14 +175,22 @@ export class AppComponent {
       excludeClass.push(heal.class);
 
       const isDoubleRanged = this.setup.rangeCount > 1;
+
+
+
       const dps1: ISpec = this.getRandomSpec(isDoubleRanged ? rangesListData : meleesListData, excludeClass);
       excludeClass.push(dps1.class);
+
+      const dps3: ISpec = this.getRandomSpec(isDoubleRanged ? rangesListData : meleesListData, excludeClass);
+      excludeClass.push(dps3.class);
+
+      if(isDoubleRanged){
+        excludeClass.push('hunt')
+      }
 
       const dps2: ISpec = this.getRandomSpec(isDoubleRanged ? meleesListData : rangesListData, excludeClass);
       excludeClass.push(dps2.class);
 
-      const dps3: ISpec = this.getRandomSpec(isDoubleRanged ? rangesListData : meleesListData, excludeClass);
-      excludeClass.push(dps3.class);
 
       let result: IResult = {
         tank: {spec: tank, player: this.selectPlayer()},
