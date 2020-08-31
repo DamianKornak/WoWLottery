@@ -52,7 +52,10 @@ export class AppComponent {
     'Nicolas/war/Fureur',
     'Julien/voleur/Assasinat',
     'Julien/voleur/Horslaloi',
-    'Julien/voleur/Finesse'
+    'Julien/voleur/Finesse',
+    'Hugo/demo/Afflication',
+    'Hugo/demo/Démonologie',
+    'Hugo/demo/Destruction'
   ];
   forbidenPlayerRoleCombos: string[] = [''];
 
