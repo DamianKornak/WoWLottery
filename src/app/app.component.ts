@@ -327,7 +327,7 @@ export class AppComponent {
     globalResult.map(result => {
       Object.keys(result).map(key => {
         let specData: { spec: ISpec, player?: IPlayer } = result[key];
-        allSpecs.push({type: specData.spec.type, name: specData.spec.name});
+        allSpecs.push({type: specData.spec.type, name: specData.spec.name, class: specData.spec.class});
 
         switch (specData.spec.type) {
           case 'DpsCac':
@@ -353,21 +353,22 @@ export class AppComponent {
     allDpsCac.map(el => newReport[el].dpsCac += 1);
     allDpsDistance.map(el => newReport[el].dpsDistance += 1);
 
-    // this.getAllSpecStats(allSpecs);
+    this.getAllSpecStats(allSpecs);
 
     return newReport;
   }
 
   getAllSpecStats(allSpecs: ISpec[]) {
     let test = [];
+    let classes = [];
     allSpecs.map(el => {
-      if (!!test[el.type] && !!test[el.type][el.name]) {
-        test[el.type][el.name] += 1;
+      if (!!test[el.type] && !!test[el.type][el.class+'/'+el.name]) {
+        test[el.type][el.class+'/'+el.name] += 1;
       } else if (!!test[el.type]) {
-        test[el.type][el.name] = 1;
+        test[el.type][el.class+'/'+el.name] = 1;
       } else {
         test[el.type] = [];
-        test[el.type][el.name] = 1;
+        test[el.type][el.class+'/'+el.name] = 1;
       }
     });
 
